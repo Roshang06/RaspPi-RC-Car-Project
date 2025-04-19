@@ -8,6 +8,8 @@ HOST = '0.0.0.0'  # Listen on all interfaces
 PORT = 65432
 
 
+
+
 defaultSpeed = 1000
 shiftSpeed = 1500
 speed = 0
@@ -27,9 +29,9 @@ def map(start1, stop1, start2, stop2, num):
 def EaseInOut(accel,start,stop,current):
     return (math.sin(-math.pi/2) + 1)/2
 def PortData(data):
-    targetSteeringAngle = ControlData(data).Left*minSteeringAngle + ControlData(data).Right*maxSteeringAngle
-    targetSpeed = ((ControlData(data).forward*defaultSpeed)*ControlData(data).shift) + ((ControlData(data).forward*shiftSpeed)*(not ControlData(data).shift))
-    reverse = ControlData(data).backward
+    targetSteeringAngle = (data).left*minSteeringAngle + (data).right*maxSteeringAngle
+    targetSpeed = (((data).forward*defaultSpeed)*(data).shift) + (((data).forward*shiftSpeed)*(not (data).shift))
+    reverse = (data).backward
 def PrintData():
     print(f"targetSteeringAngle: {targetSteeringAngle}","")
     print(f"targetSpeed: {targetSpeed}","")
@@ -49,5 +51,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             data = conn.recv(1024)
             if not data:
                 break
-            PortData(pickle.loads(data))
-            PrintData
+            obj = pickle.loads(data)
+            PortData(obj)
+            PrintData()
