@@ -70,7 +70,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
     while (not Stop_Program):
 
-        s.sendall(pickle.dumps(control_data))
+        s.sendall(pickle.dumps(control_data.to_string()))
 
 
 
