@@ -6,9 +6,11 @@ class ControlData:
         self.right = False
         self.left = False
     def __str__(self):
+        self.Corrections()
         return self.to_string()
 
     def to_string(self):
+        self.Corrections()
         return f"ControlData(shift={self.shift}, forward={self.forward}, backward={self.backward}, right={self.right}, left={self.left})"
 
     @classmethod
