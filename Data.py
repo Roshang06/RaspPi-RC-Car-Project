@@ -21,4 +21,8 @@ class ControlData:
             key, value = pair.split("=")
             setattr(obj, key, value == "True")
         return obj
+    def Corrections(self):
+        if self.right and self.left:
+            self.right = False
+            self.left = False
     

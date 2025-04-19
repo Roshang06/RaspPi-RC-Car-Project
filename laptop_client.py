@@ -8,6 +8,7 @@ Stop_Program = False
 
 
 def on_press(key):
+    global Stop_Program
     print(key)
 
     #quit press esc
@@ -16,17 +17,18 @@ def on_press(key):
         # Stop listener
         return False
 
-    if key.char.lower() == 'w':
-        control_data.forward = True
-    if key.char.lower() == 'a':
-        control_data.left = True
-    if key.char.lower() == 's':
-        control_data.backward = True
-    if key.char.lower() == 'd':
-        control_data.right = True
-
-    if key == keyboard.Key.shift:
-        control_data.shift = True
+    try:
+        if key.char.lower() == 'w':
+            control_data.forward = True
+        if key.char.lower() == 'a':
+            control_data.left = True
+        if key.char.lower() == 's':
+            control_data.backward = True
+        if key.char.lower() == 'd':
+            control_data.right = True
+    except:
+        if key == keyboard.Key.shift:
+            control_data.shift = True
 
 
     print(control_data)
@@ -36,18 +38,18 @@ def on_press(key):
 
 def on_release(key):
     print(key)
-
-    if key.char.lower() == 'w':
-        control_data.forward = False
-    if key.char.lower() == 'a':
-        control_data.left = False
-    if key.char.lower() == 's':
-        control_data.backward = False
-    if key.char.lower() == 'd':
-        control_data.right = False
-
-    if key == keyboard.Key.shift:
-        control_data.shift = False
+    try:
+        if key.char.lower() == 'w':
+            control_data.forward = False
+        if key.char.lower() == 'a':
+            control_data.left = False
+        if key.char.lower() == 's':
+            control_data.backward = False
+        if key.char.lower() == 'd':
+            control_data.right = False
+    except:
+        if key == keyboard.Key.shift:
+            control_data.shift = False
 
     print(control_data)
 
@@ -69,8 +71,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
 
     while (not Stop_Program):
-
-        s.sendall(pickle.dumps(control_data.to_string()))
+        s.sendall(f"{control_data.to_string()}".encode())
+        data = s.recv(1024)
 
 
 
