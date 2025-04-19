@@ -6,8 +6,7 @@ class ControlData:
         self.right = False
         self.left = False
     def __str__(self):
-        self.Corrections()
-        return self.to_string()
+        return f"ControlData(shift={self.shift}, forward={self.forward}, backward={self.backward}, right={self.right}, left={self.left})"
 
     def to_string(self):
         self.Corrections()
