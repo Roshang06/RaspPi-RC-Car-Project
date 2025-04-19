@@ -9,7 +9,6 @@ class ControlData:
         return f"ControlData(shift={self.shift}, forward={self.forward}, backward={self.backward}, right={self.right}, left={self.left})"
 
     def to_string(self):
-        self.Corrections()
         return f"ControlData(shift={self.shift}, forward={self.forward}, backward={self.backward}, right={self.right}, left={self.left})"
 
     @classmethod
