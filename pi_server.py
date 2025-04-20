@@ -126,14 +126,14 @@ def UpdateMotorSpeed(turningAngle):
     turn = 0
     if(turningAngle < defaultSteeringAngle):
         turn = map(minSteeringAngle,defaultSteeringAngle,-1,0,turningAngle)
-    if(turningAngle > defaultSteeringAngle):
+    elif(turningAngle > defaultSteeringAngle):
         turn = map(defaultSteeringAngle,maxSteeringAngle,0,1,turningAngle)
     else:
         leftMotorSpeed = speed
         rightMotorSpeed = speed
         return
-    leftMotorSpeed = speed * (1.0 - turn)
-    rightMotorSpeed = speed * (1.0 + turn)
+    leftMotorSpeed = ((speed-1000) * (1.0 - turn)) + 1000
+    rightMotorSpeed = ((speed-1000) * (1.0 + turn)) + 1000
     
         
 
