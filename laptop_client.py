@@ -5,6 +5,7 @@ import pickle
 
 control_data = ControlData()
 Stop_Program = False
+Connected = False
 
 
 def on_press(key):
@@ -62,15 +63,23 @@ listener = keyboard.Listener(
     daemon=True
 )
 
-listener.start()
 
 HOST = '192.168.68.128'  #Raspberry Pi’s IP address
 PORT = 65432
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
 
-    while (not Stop_Program):
+    try:
+        print("Trying to connect...")
+        s.connect((HOST, PORT))
+        print("Connected successfully!")
+        listener.start()
+        Connected = True
+    except Exception as e:
+        print(f"Connection failed: {e}")
+
+
+    while (not Stop_Program and Connected):
         s.sendall(f"{control_data.to_string()}".encode())
         data = s.recv(1024)
 
