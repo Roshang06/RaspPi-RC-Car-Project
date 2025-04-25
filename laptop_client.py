@@ -64,7 +64,7 @@ listener = keyboard.Listener(
 )
 
 
-HOST = '192.168.68.128'  #Raspberry Pi’s IP address
+HOST = '192.168.68.132'  #Raspberry Pi’s IP address
 PORT = 65432
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
