@@ -114,8 +114,8 @@ def CarControl():
     servo_pulsewidth = map(0, 180, 500, 2500, steeringAngle)
     servo_pulsewidth = min(max(servo_pulsewidth, 500), 2500)
     pi.set_servo_pulsewidth(servo_GPIO, servo_pulsewidth)
-    pi.set_servo_pulsewidth(Left_ESC_GPIO,min(max(leftMotorSpeed, 500), 2500))
-    pi.set_servo_pulsewidth(Right_ESC_GPIO,min(max(rightMotorSpeed, 500), 2500))
+    pi.set_servo_pulsewidth(Left_ESC_GPIO,min(max(leftMotorSpeed, 500), 2000))
+    pi.set_servo_pulsewidth(Right_ESC_GPIO,min(max(rightMotorSpeed, 500), 2000))
 
 def UpdateMotorSpeed(turningAngle):
     global minSteeringAngle
@@ -134,8 +134,20 @@ def UpdateMotorSpeed(turningAngle):
         return
     leftMotorSpeed = ((speed-1000) * (1.0 - turn)) + 1000
     rightMotorSpeed = ((speed-1000) * (1.0 + turn)) + 1000
-    
-        
+
+def ESCCalibration():
+    print("Starting Calibration")
+    pi.set_servo_pulsewidth(Left_ESC_GPIO, 2000)
+    pi.set_servo_pulsewidth(Right_ESC_GPIO, 2000)
+    time.sleep(1)
+    pi.set_servo_pulsewidth(Left_ESC_GPIO, 1000)
+    pi.set_servo_pulsewidth(Right_ESC_GPIO, 1000)
+    time.sleep(1)
+    print("Ended Calibration")
+
+
+# Calibrating ESC
+ESCCalibration() 
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -146,6 +158,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         print(f"Connected by {addr}")
         lastTime = time.time()
         while True:
+            time.sleep(0.020)
             data = conn.recv(1024)
             if not data:
                 break
